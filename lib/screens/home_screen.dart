@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'mind_vault_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -136,32 +137,40 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1F2113),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32),
-                  ),
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.10),
-                    width: 1,
-                  ),
-                ),
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Mind Vault',
-                      style: GoogleFonts.inter(
-                        color: const Color(0xFFE3E4CE),
-                        fontWeight: FontWeight.w800,
-                        fontSize: 20,
-                      ),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const MindVaultScreen()),
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1F2113),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32),
                     ),
-                  ],
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.10),
+                      width: 1,
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Mind Vault',
+                        style: GoogleFonts.inter(
+                          color: const Color(0xFFE3E4CE),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
