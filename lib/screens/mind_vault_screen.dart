@@ -2,20 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../widgets/mind_space_card.dart';
 
-class MindVaultScreen extends StatelessWidget {
+class MindVaultScreen extends StatefulWidget {
   const MindVaultScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final List<String> spaces = [
-      "Movies",
-      "Recipes",
-      "Education",
-      "Religion",
-      "Memes",
-      "Songs",
-    ];
+  State<MindVaultScreen> createState() => _MindVaultScreenState();
+}
 
+class _MindVaultScreenState extends State<MindVaultScreen> {
+  // The list of Mind Spaces. Lives here so it survives rebuilds.
+  List<String> spaces = [
+    "Movies",
+    "Recipes",
+    "Education",
+    "Religion",
+    "Memes",
+    "Songs",
+  ];
+
+  void _addSpace() {
+    setState(() {
+      spaces.add("New Space ${spaces.length + 1}");
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0D0F04),
       body: SafeArea(
@@ -81,7 +93,7 @@ class MindVaultScreen extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(32),
-                    onTap: () {},
+                    onTap: _addSpace,
                     child: const Icon(Icons.add, color: Colors.black, size: 32),
                   ),
                 ),
