@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/home_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'services/database_service.dart';
 
-void main() {
+final databaseService = DatabaseService();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: ".env");
+  await databaseService.initialize();
+  await dotenv.load(fileName: ".env"); // await dotenv.load(fileName: ".env");
+  await databaseService.initialize(); // await databaseService.initialize();
   runApp(const KismetApp());
 }
 
