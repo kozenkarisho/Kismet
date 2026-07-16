@@ -1,83 +1,104 @@
-// kismet_logo.dart
-// This widget is the official app wordmark, displayed in the header of the Home Screen.
-// Think of it as the neon sign hanging above the entrance of our building.
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:math';
 
-// KismetLogo is a StatelessWidget because it never changes on its own.
-// A neon sign just sits there and glows; it does not need to remember anything.
 class KismetLogo extends StatelessWidget {
-  const KismetLogo({super.key});
+  final double? size;
+  final Color? color;
+
+  const KismetLogo({super.key, this.size, this.color});
 
   @override
   Widget build(BuildContext context) {
-    // A Row lays out its children horizontally, left to right.
-    // We use a Row so we can place the text and the accent dot side by side.
+    final textColor = color ?? const Color(0xFFE3E4CE);
+    final logoSize = size ?? 34.0;
+
     return Row(
-      // Keep everything packed tightly together at the start (left side).
       mainAxisSize: MainAxisSize.min,
-
-      // Align items along the vertical center of the Row.
-      crossAxisAlignment: CrossAxisAlignment.center,
-
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
       children: [
-        // --- The "K" letter with a yellow tint to set it apart ---
-        // We split the word "Kismet" into "K" and "ismet" so we can style
-        // the first letter differently, like a decorative drop cap.
         Text(
           'K',
           style: GoogleFonts.inter(
-            // The vibrant electric yellow that defines the Kismet brand.
-            color: const Color(0xFFDFFF00),
-
-            // Thin weight gives it a modern, editorial feel.
+            color: textColor,
             fontWeight: FontWeight.w300,
-
-            // Large enough to be a clear wordmark.
-            fontSize: 28,
-
-            // Wide letter spacing makes it feel airy and premium.
-            letterSpacing: 4,
+            fontSize: logoSize,
+            letterSpacing: 0.2 * logoSize / 10,
           ),
         ),
-
-        // --- The rest of the wordmark "ismet" in the standard off-white ---
+        SizedBox(
+          width: logoSize * 0.35,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            clipBehavior: Clip.none,
+            children: [
+              Text(
+                'ı',
+                style: GoogleFonts.inter(
+                  color: textColor,
+                  fontWeight: FontWeight.w300,
+                  fontSize: logoSize * 0.85,
+                ),
+              ),
+              Positioned(
+                bottom: logoSize * 0.3,
+                child: CustomPaint(
+                  size: Size(logoSize * 0.4, logoSize * 0.4),
+                  painter: StarPainter(color: textColor),
+                ),
+              ),
+            ],
+          ),
+        ),
         Text(
-          'ismet',
+          'SMET',
           style: GoogleFonts.inter(
-            // The primary off-white text color used throughout the app.
-            color: const Color(0xFFE3E4CE),
-
-            // Matching weight and size to the "K" for visual consistency.
+            color: textColor,
             fontWeight: FontWeight.w300,
-            fontSize: 28,
-            letterSpacing: 4,
-          ),
-        ),
-
-        // --- A small gap before the accent dot ---
-        // SizedBox acts as an invisible spacer. This pushes the dot a little
-        // away from the last letter, so it does not feel cramped.
-        const SizedBox(width: 6),
-
-        // --- The accent dot: a tiny yellow circle ---
-        // This is the "subtle vibrant yellow accent" requested in the brief.
-        // Think of it like the dot on a lowercase 'i', but for the whole brand.
-        Container(
-          // Width and height together create a perfect circle shape.
-          width: 6,
-          height: 6,
-
-          decoration: const BoxDecoration(
-            // Fill the circle with our brand yellow.
-            color: Color(0xFFDFFF00),
-
-            // BoxShape.circle makes it a perfect dot, with no corners.
-            shape: BoxShape.circle,
+            fontSize: logoSize,
+            letterSpacing: 0.2 * logoSize / 10,
           ),
         ),
       ],
     );
   }
+}
+
+class StarPainter extends CustomPainter {
+  final Color color;
+
+  StarPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    final center = Offset(size.width / 2, size.height / 2);
+    final outerRadius = size.width / 2;
+    final innerRadius = outerRadius * 0.4;
+
+    // Draw 8-point star
+    final path = Path();
+    for (int i = 0; i < 16; i++) {
+      final angle = (i * 22.5) * 3.14159 / 180;
+      final radius = i % 2 == 0 ? outerRadius : innerRadius;
+      final x = center.dx + radius * cos(angle);
+      final y = center.dy + radius * sin(angle);
+
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
