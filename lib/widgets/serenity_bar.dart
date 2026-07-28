@@ -1,3 +1,4 @@
+import '../theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -25,7 +26,7 @@ class SerenityBar extends StatelessWidget {
           color: isDark ? const Color(0xFF1F2113) : Colors.white,
           borderRadius: BorderRadius.circular(9999),
           border: Border.all(
-            color: isDark ? const Color(0xFF454932) : const Color(0x111C1E14),
+            color: isDark ? const Color(0xFF454932) : AppTheme.borderLight,
             width: 1,
           ),
           boxShadow: [
@@ -41,7 +42,7 @@ class SerenityBar extends StatelessWidget {
           children: [
             Icon(
               Icons.search,
-              color: isDark ? const Color(0xFFC6C9AB) : const Color(0x661C1E14),
+              color: isDark ? const Color(0xFFC6C9AB) : AppTheme.textMutedLight,
               size: 20,
             ),
             const SizedBox(width: 12),
@@ -51,7 +52,7 @@ class SerenityBar extends StatelessWidget {
                 style: GoogleFonts.inter(
                   color: isDark
                       ? const Color(0xFFC6C9AB)
-                      : const Color(0x661C1E14),
+                      : AppTheme.textMutedLight,
                   fontSize: 15,
                 ),
               ),
@@ -77,3 +78,4 @@ class SerenityBar extends StatelessWidget {
     );
   }
 }
+

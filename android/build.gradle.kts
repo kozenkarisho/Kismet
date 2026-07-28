@@ -41,3 +41,26 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+
+subprojects {
+    afterEvaluate {
+        if (project.hasProperty("android")) {
+            try {
+                val androidExt = project.extensions.getByName("android")
+                val compileOptions = androidExt.javaClass.getMethod("getCompileOptions").invoke(androidExt)
+                val setSourceCompatibility = compileOptions.javaClass.getMethod("setSourceCompatibility", JavaVersion::class.java)
+                val setTargetCompatibility = compileOptions.javaClass.getMethod("setTargetCompatibility", JavaVersion::class.java)
+                setSourceCompatibility.invoke(compileOptions, JavaVersion.VERSION_17)
+                setTargetCompatibility.invoke(compileOptions, JavaVersion.VERSION_17)
+            } catch (e: Exception) {
+                // Ignore
+            }
+        }
+        
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).configureEach {
+            compilerOptions {
+                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+            }
+        }
+    }
+}

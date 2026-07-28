@@ -8,7 +8,8 @@ class AppTheme {
   static const Color cardBgDark = Color(0xFF1F2113);
   static const Color vaultBgDark = Color(0xFF1A1C10);
   static const Color inputBgDark = Color(0xFF353825);
-  static const Color textMainLight = Color(0xFF1C1E14);
+  static const Color textMainLight = Color(0xFF000000);
+  static const Color textMutedLight = Color(0xFF555555);
   static const Color textMainDark = Color(0xFFE3E4CE);
   static const Color textMutedDark = Color(0xFFC6C9AB);
   static const Color accentLight = Color(0xFFB8D900);
@@ -54,3 +55,4 @@ class AppTheme {
     );
   }
 }
+

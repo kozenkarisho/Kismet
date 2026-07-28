@@ -39,6 +39,7 @@ class LinkItem {
   final String title;
   final String url;
   final String? note;
+  final String? summary;
   final List<String>? keywords;
   final int? timestamp;
 
@@ -47,6 +48,7 @@ class LinkItem {
     required this.title,
     required this.url,
     this.note,
+    this.summary,
     this.keywords,
     this.timestamp,
   });
@@ -57,6 +59,7 @@ class LinkItem {
       'title': title,
       'url': url,
       'note': note,
+      'summary': summary,
       'keywords': keywords,
       'timestamp': timestamp,
     };
@@ -68,6 +71,7 @@ class LinkItem {
       title: json['title'],
       url: json['url'],
       note: json['note'],
+      summary: json['summary'],
       keywords: json['keywords'] != null
           ? List<String>.from(json['keywords'])
           : null,
